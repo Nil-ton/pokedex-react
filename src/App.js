@@ -1,5 +1,5 @@
 import 'semantic-ui-css/semantic.min.css'
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 import { Icon, Input } from 'semantic-ui-react'
 import { useEffect, useState } from 'react/cjs/react.development'
 import axios from "axios"

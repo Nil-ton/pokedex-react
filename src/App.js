@@ -12,7 +12,7 @@ function App() {
     const pokemonList = []
     for (let i = 1; i <= 150; i++) {
       pokemonList.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
-        .then(response => response.data)
+        .then(response => response.data).catch(error => console.log(error))
       )
     }
 
@@ -20,11 +20,12 @@ function App() {
       .then(response => {
         setPokemons(response)
       })
-
+      .catch(error => console.log(error))
   }, [])
 
-  const filterPokemons = pokemons.filter((pokemon) => pokemon.name.includes(search.toLowerCase()))
-  const showPokemons = filterPokemons.map(
+
+const filterPokemonsName = pokemons.filter( pokemon => pokemon.name.includes(search.toLowerCase()) || pokemon.id === parseInt(search) || pokemon.types[0].type.name === search.toLowerCase())  
+  const showPokemons = filterPokemonsName.map(
     (pokemon) =>
       <ul key={pokemon.name}>
         <li>
@@ -46,7 +47,7 @@ function App() {
         <h1>Pokedex</h1>
         <Input
           icon={<Icon name='search' inverted circular link />}
-          placeholder='Search...'
+          placeholder='Search... [id, name or type]'
           className="searchPokedex"
           value={search}
           onChange={(e) => { setSearch(e.target.value)}}

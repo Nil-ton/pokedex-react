@@ -8,8 +8,6 @@ function App() {
   const [pokemons, setPokemons] = useState([])
   const [search, setSearch] = useState('')
 
-  
-
   useEffect(() => {
     const pokemonList = []
     for (let i = 1; i <= 150; i++) {

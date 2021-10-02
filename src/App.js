@@ -34,13 +34,7 @@ function App() {
   const show = () => {
     if (loading === false) {
         return <div>
-            <Segment>
-                <Dimmer active>
-                    <Loader />
-                </Dimmer>
-
-                <Image src='/images/wireframe/short-paragraph.png' />
-            </Segment>
+             <Loader active inline='centered' />
         </div>
     } else {
         return <Pokemons search={search} pokemons={pokemons} loading = {loading}/>

@@ -21,7 +21,6 @@ body{
 .showPokemons {
     display: grid;
     grid-template-columns:1fr 1fr 1fr;
-    margin: 0 200px;
 }
 
 .showPokemons ul{
@@ -35,14 +34,16 @@ body{
 }
 
 .showPokemons .stats{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     margin-top: 20px;
 }
 
 .showPokemons ul li img{
     width: 150px;
     background-color: #fff;
-    border-radius: 100%;
+    border-radius: 50%;
+}
+
+.showPokemons .stats h4{
+    margin: 0 auto;
+    padding: 0 auto;
 }

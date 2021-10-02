@@ -1,5 +1,5 @@
 # Sobre
-<p>Um pokedex simples que utiliza a PokeApi, uma api com dados de pokemons</p>
+<p>Um pokedex simples que utiliza a PokeApi, uma api com dados de pokemons.</p>
 <img src = "./public/pokedex.gif" alt = "pokedex.gif" /> 
 
 # Dependência

@@ -1,16 +1,18 @@
 import 'semantic-ui-css/semantic.min.css'
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 import { Icon, Input } from 'semantic-ui-react'
 import { useEffect, useState } from 'react/cjs/react.development'
 import axios from "axios"
-
+import Pokemons from "./components/Pokemons"
 function App() {
 
   const [pokemons, setPokemons] = useState([])
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const pokemonList = []
-    for (let i = 1; i <= 150; i++) {
+    for (let i = 1; i <= 898; i++) {
       pokemonList.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
         .then(response => response.data).catch(error => console.log(error))
       )
@@ -19,27 +21,33 @@ function App() {
     Promise.all(pokemonList)
       .then(response => {
         setPokemons(response)
+        setLoading(true)
       })
       .catch(error => console.log(error))
+      
   }, [])
 
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  }
 
-const filterPokemonsName = pokemons.filter( pokemon => pokemon.name.includes(search.toLowerCase()) || pokemon.id === parseInt(search) || pokemon.types[0].type.name === search.toLowerCase())  
-  const showPokemons = filterPokemonsName.map(
-    (pokemon) =>
-      <ul key={pokemon.name}>
-        <li>
-          <h1>{`#${pokemon.id} ${pokemon.name}`}</h1>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <div className="stats">
-            <h4>{`HP:   ${pokemon.stats[0].base_stat}`}</h4>
-            <h4>{`ATT:  ${pokemon.stats[1].base_stat}`}</h4>
-            <h4>{`DEF:  ${pokemon.stats[2].base_stat}`}</h4>
-            <h4>{`TYPE: ${pokemon.types[0].type.name}`}</h4>
-          </div>
-        </li>
-      </ul>
-  )
+  const show = () => {
+    if (loading === false) {
+        return <div>
+            <Segment>
+                <Dimmer active>
+                    <Loader />
+                </Dimmer>
+
+                <Image src='/images/wireframe/short-paragraph.png' />
+            </Segment>
+        </div>
+    } else {
+        return <Pokemons search={search} pokemons={pokemons} loading = {loading}/>
+    }
+}
+
+
 
   return (
     <>
@@ -50,11 +58,9 @@ const filterPokemonsName = pokemons.filter( pokemon => pokemon.name.includes(sea
           placeholder='Search... [id, name or type]'
           className="searchPokedex"
           value={search}
-          onChange={(e) => { setSearch(e.target.value)}}
+          onChange={handleChange}
         />
-        <div className="showPokemons">
-          {showPokemons}
-        </div>
+         {show()}
       </div>
     </>
   );
